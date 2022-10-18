@@ -3,7 +3,7 @@
  * Date: 18/10/2022
  */
 
-#include <stdlib>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
@@ -15,16 +15,12 @@
  * Return: The size of of argument paramters.
 */
 
-int set_size(char *str, ...)
+int set_size(const char *str, ...)
 {
 	/*store the buffer size of the whole arguments*/
-	int buffer_size;
-
-	/*Format specifiers*/
-	char c = 'c', s = 's', d = 'd', i = 'i', o = 'o', u = 'u', x = 'x', X = 'X', p = 'p';
+	int index, buffer_size;
 
 	/*Argument parameters*/
-
 	va_list ap;
 
 	if (str == NULL)
@@ -41,20 +37,20 @@ int set_size(char *str, ...)
 
 			switch(str[index + 1])
 			{
-			case c:
-				buffer_size += sizeof(va_arg(ap, char));
+			case 'c':
+				buffer_size += sizeof(va_arg(ap, int));
 				break;
 
-			case s:
+			case 's':
                                 buffer_size += sizeof(va_arg(ap, char*));
                                 break;
-			case d:
+			case 'd':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
-			case i:
+			case 'i':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
-			case u:
+			case 'u':
 				buffer_size += sizeof(va_arg(ap, unsigned int));
 				break;
 			}
@@ -71,13 +67,10 @@ int set_size(char *str, ...)
  * Return: The length of characters printed out.
  */
 
-_printf(const char *format, ...)
+int _printf(const char *format, ...)
 {
 	/*interators*/
 	int index, index2;
-
-	/*Format characters*/
-	char c = 'c', s = 's', d = 'd', i = 'i', o = 'o', u = 'u', x = 'x', X = 'X', p = 'p';
 
 	/*store the length argument of characters*/
 	int length = 0;
