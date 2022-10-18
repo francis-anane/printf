@@ -17,14 +17,21 @@
 
 int set_size(char *str, ...)
 {
-	/*store the buffer size of the whole arguments and also the length*/
+	/*store the buffer size of the whole arguments*/
 	int buffer_size;
 
 	/*Format specifiers*/
 	char c = 'c', s = 's', d = 'd', i = 'i', o = 'o', u = 'u', x = 'x', X = 'X', p = 'p';
 
+	/*Argument parameters*/
+
+	va_list ap;
+
 	if (str == NULL)
 		exit(1);
+
+	/*Initialize argument list*/
+	va_start(ap, str);
 
 	buffer_size = sizeof(str);
 
@@ -84,6 +91,28 @@ _printf(const char *format, ...)
 	if (format == NULL)
 		exit(1);
 
+
+	whole_buffer = malloc(set_size(format));
+
 	va_start(ap, format);
+
+	for (index = 0; index < strlen(format); index++)
+
+		whole_buffer[index] = format[index];
+
+	for (index2 = 0; index2 < strlen(format); index2++)
+	{
+		if (format[index2] == '%' && format[index2 + 1] == c)
+
+			whole_buffer[index] = va_arg(ap, char);
+
+		else if (format[index2] == '%' && format[index2 + 1] == s)
+
+			whole_buffer[index] = va_arg(ap, char*);
+
+		else if ((format[index2] == '%') && (format[index2 + 1] == d || format[index2 + 1] == d))
+
+			whole_buffer[index] = va_arg(ap, int);
+	}
 
 }
