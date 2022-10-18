@@ -95,15 +95,15 @@ int _printf(const char *format, ...)
 
 	for (index2 = 0; index2 < strlen(format); index2++)
 	{
-		if (format[index2] == '%' && format[index2 + 1] == c)
+		if (format[index2] == '%' && format[index2 + 1] == 'c')
 
 			whole_buffer[index] = va_arg(ap, char);
 
-		else if (format[index2] == '%' && format[index2 + 1] == s)
+		else if (format[index2] == '%' && format[index2 + 1] == 's')
 
 			whole_buffer[index] = va_arg(ap, char*);
 
-		else if ((format[index2] == '%') && (format[index2 + 1] == d || format[index2 + 1] == d))
+		else if ((format[index2] == '%') && (format[index2 + 1] == 'd' || format[index2 + 1] == 'i'))
 
 			whole_buffer[index] = va_arg(ap, int);
 	}
