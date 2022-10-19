@@ -7,6 +7,33 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+
+/**
+ * copy_string - Copy string from src to dest at a giving index.
+ *
+ * @dest: A pointer to the receiving buffer
+ * @src: A pointer to the source buffer.
+ * @index: The index to start coping from.
+ *
+ * Return: A pointer to the copied string, or (NULL) if src is NULL)
+ */
+
+/*char *copy_string(char *dest, char *src, int *index)
+{
+	if (src == NULL)
+		return (NULL);
+
+	int i = 0;
+	while (src[i])
+	{
+		dest[index] = src[i];
+		i++;
+		index++;
+	}
+
+	return (dest);
+	}*/
 
 /**
  * set_size - Set a byte size from list of arguments.
@@ -30,6 +57,9 @@ int set_size(const char *str, ...)
 	va_start(ap, str);
 
 	buffer_size = sizeof(str);
+	if(str[0] == '%')
+		printf("%s", va_arg(ap, char*));
+	return (0);
 
 	for (index = 0; index < strlen(str); index++)
 	{
@@ -38,7 +68,7 @@ int set_size(const char *str, ...)
 			switch(str[index + 1])
 			{
 			case 'c':
-				buffer_size += sizeof(va_arg(ap, int));
+				buffer_size += sizeof(va_arg(ap, char));
 				break;
 
 			case 's':
@@ -52,6 +82,12 @@ int set_size(const char *str, ...)
 				break;
 			case 'u':
 				buffer_size += sizeof(va_arg(ap, unsigned int));
+				break;
+			case 'p':
+				buffer_size += sizeof(va_arg(ap, void *));
+				break;
+			case 'o':
+				buffer_size += sizeof(va_arg(ap, char));
 				break;
 			}
 	}
@@ -91,7 +127,8 @@ int _printf(const char *format, ...)
 
 	for (index = 0; index < strlen(format); index++)
 
-		whole_buffer[index] = format[index];
+		/*whole_buffer[index] = format[index];
+		  whole_buffer = copy_string(whole_buffer, format, )*/
 
 	for (index2 = 0; index2 < strlen(format); index2++)
 	{
@@ -108,4 +145,21 @@ int _printf(const char *format, ...)
 			whole_buffer[index] = va_arg(ap, int);
 	}
 
+}
+
+void increase(int *i)
+{
+	i += 10;
+}
+int main(void)
+{
+	int *j, i = 0;
+
+	j = &i;
+
+	increase(j);
+
+	printf("%d\n", *j);
+
+	return (0);
 }
