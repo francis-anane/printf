@@ -21,9 +21,9 @@
  * (NULL) if src or index is NULL
  */
 
-char *copy_string(char *dest, const char *src, unsigned int *index)
+char *copy_string(char *dest, const char *src, size_t *index)
 {
-	unsigned int i;
+	size_t i;
 
 	if (src == NULL || index == NULL)
 		return (NULL);
@@ -44,7 +44,7 @@ char *copy_string(char *dest, const char *src, unsigned int *index)
 
 int set_size(const char *str, ...)
 {
-	unsigned int index, buffer_size = 0, length = 0;
+	size_t index, buffer_size = 0, length = 0;
 	va_list ap;
 
 	if (str == NULL)
@@ -96,7 +96,7 @@ int set_size(const char *str, ...)
 int _printf(const char *format, ...)
 {
 	/*interators*/
-	unsigned int index = 0, index2 = 0;
+	size_t index = 0, index2 = 0;
 	/*store the length argument of characters*/
 	int length = 0;
 	/* Allocates memory for list of arguments*/
