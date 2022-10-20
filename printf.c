@@ -96,7 +96,7 @@ int set_size(const char *str, ...)
 int _printf(const char *format, ...)
 {
 	/*interators*/
-	int index = 0, index2 = 0;
+	unsigned int index = 0, index2 = 0;
 	/*store the length argument of characters*/
 	int length = 0;
 	/* Allocates memory for list of arguments*/
