@@ -21,7 +21,7 @@
  * (NULL) if src or index is NULL
  */
 
-char *copy_string(char *dest, const char *src, int *index)
+char *copy_string(char *dest, const char *src, unsigned int *index)
 {
 	unsigned int i;
 
@@ -100,7 +100,7 @@ int _printf(const char *format, ...)
 	/*store the length argument of characters*/
 	int length = 0;
 	/* Allocates memory for list of arguments*/
-	char *whole_buffer, *data_to_print;
+	char *whole_buffer, *data_to_print __attribute__((unused));
 	/*Argument parameters*/
 	va_list ap;
 
@@ -114,7 +114,7 @@ int _printf(const char *format, ...)
 	for (index2 = 0; index2 < strlen(format); index2++)
 	{
 		if (format[index2] == '%' && format[index2 + 1] == 'c')
-			whole_buffer[index] = va_arg(ap, char);
+			whole_buffer[index] = va_arg(ap, int);
 
 		else if (format[index2] == '%' && format[index2 + 1] == 's')
 			copy_string(whole_buffer, va_arg(ap, char*), &index);
