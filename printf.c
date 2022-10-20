@@ -27,7 +27,6 @@ char *copy_string(char *dest, const char *src, int *index)
 
 	if (src == NULL || index == NULL)
 		return (NULL);
-
 	for (i = 0; i < strlen(src); i++)
         {
                *(dest + *index) = src[i];
@@ -61,6 +60,7 @@ int set_size(const char *str, ...)
 	/*Initialize argument list*/
 	va_start(ap, str);
 
+	/*Increment buffer_size*/
 	for (index = 0; index < strlen(str); index++)
 	{
 		if (str[index] == '%')
@@ -117,55 +117,44 @@ int _printf(const char *format, ...)
 {
 	/*interators*/
 	int index = 0, index2 = 0;
-
 	/*store the length argument of characters*/
 	int length = 0;
-
 	/* Allocates memory for list of arguments*/
 	char *whole_buffer, *data_to_print;
-
 	/*Argument parameters*/
 	va_list ap;
 
 	if (format == NULL)
 		exit(1);
 
+	/* Allocate memory with malloc, store data in pointer whole_buffer*/
 	whole_buffer = malloc(set_size(format));
-
 	va_start(ap, format);
-
 	copy_string(whole_buffer, format, &index);
 
 	for (index2 = 0; index2 < strlen(format); index2++)
 	{
 		if (format[index2] == '%' && format[index2 + 1] == 'c')
-
 			whole_buffer[index] = va_arg(ap, char);
 
 		else if (format[index2] == '%' && format[index2 + 1] == 's')
-
 			copy_string(whole_buffer, va_arg(ap, char*), &index);
 
 		else if (format[index2] == '%' && format[index2 + 1] == 'd')
-
 			whole_buffer[index] = va_arg(ap, int);
 
 		else if (format[index2] == '%' && format[index2 + 1] == 'i')
-
 			whole_buffer[index] = va_arg(ap, int);
 	}
 
-	/* For testing output whiles I code Function */
-
+	/*test ouput*/
 	while(*whole_buffer)
 	{
 		_putchar(*whole_buffer);
 		whole_buffer++;
-
 		length++;
 	}
 
 	va_end(ap);
-
 	return (length);
 }
