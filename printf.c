@@ -28,11 +28,10 @@ char *copy_string(char *dest, const char *src, int *index)
 	if (src == NULL || index == NULL)
 		return (NULL);
 	for (i = 0; i < strlen(src); i++)
-        {
-               *(dest + *index) = src[i];
-               *index += 1;
-        }
-
+	{
+		*(dest + *index) = src[i];
+		*index += 1;
+	}
 	return (dest);
 }
 
@@ -45,63 +44,44 @@ char *copy_string(char *dest, const char *src, int *index)
 
 int set_size(const char *str, ...)
 {
-	/*store the buffer size of the whole arguments by index*/
-	int index, buffer_size = 0;
-
-	/* For str length */
-	int length = 0;
-
-	/*Argument parameters*/
+	int index, buffer_size = 0, length = 0;
 	va_list ap;
 
 	if (str == NULL)
 		exit(1);
-
 	/*Initialize argument list*/
 	va_start(ap, str);
-
 	/*Increment buffer_size*/
 	for (index = 0; index < strlen(str); index++)
 	{
 		if (str[index] == '%')
-
-			switch(str[index + 1])
+			switch (str[index + 1])
 			{
 			case 'c':
 				buffer_size += sizeof(va_arg(ap, char));
 				break;
-
 			case 's':
-                                buffer_size += sizeof(va_arg(ap, char*));
-                                break;
-
+				buffer_size += sizeof(va_arg(ap, char*));
+				break;
 			case 'd':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
-
 			case 'i':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
-
 			case 'u':
 				buffer_size += sizeof(va_arg(ap, unsigned int));
 				break;
-
 			case 'p':
 				buffer_size += sizeof(va_arg(ap, void *));
 				break;
-
 			case 'o':
 				buffer_size += sizeof(va_arg(ap, char));
 				break;
 			}
-
-		/* increment length to add to buffer_size */
 		length++;
 	}
-
 	va_end(ap);
-
 	return (buffer_size + length);
 }
 
@@ -126,7 +106,6 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		exit(1);
-
 	/* Allocate memory with malloc, store data in pointer whole_buffer*/
 	whole_buffer = malloc(set_size(format));
 	va_start(ap, format);
@@ -146,15 +125,13 @@ int _printf(const char *format, ...)
 		else if (format[index2] == '%' && format[index2 + 1] == 'i')
 			whole_buffer[index] = va_arg(ap, int);
 	}
-
 	/*test ouput*/
-	while(*whole_buffer)
+	while (*whole_buffer)
 	{
 		_putchar(*whole_buffer);
 		whole_buffer++;
 		length++;
 	}
-
 	va_end(ap);
 	return (length);
 }
