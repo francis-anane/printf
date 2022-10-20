@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include "main.h"
 
 /**
  * copy_string - Copy string from src to dest at a giving index.
@@ -45,8 +46,11 @@ char *copy_string(char *dest, const char *src, int *index)
 
 int set_size(const char *str, ...)
 {
-	/*store the buffer size of the whole arguments using index for interation*/
-	int index, buffer_size;
+	/*store the buffer size of the whole arguments by index*/
+	int index, buffer_size = 0;
+
+	/* For str length */
+	int length = 0;
 
 	/*Argument parameters*/
 	va_list ap;
@@ -56,8 +60,6 @@ int set_size(const char *str, ...)
 
 	/*Initialize argument list*/
 	va_start(ap, str);
-
-	buffer_size = sizeof(str);
 
 	for (index = 0; index < strlen(str); index++)
 	{
@@ -72,27 +74,35 @@ int set_size(const char *str, ...)
 			case 's':
                                 buffer_size += sizeof(va_arg(ap, char*));
                                 break;
+
 			case 'd':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
+
 			case 'i':
 				buffer_size += sizeof(va_arg(ap, int));
 				break;
+
 			case 'u':
 				buffer_size += sizeof(va_arg(ap, unsigned int));
 				break;
+
 			case 'p':
 				buffer_size += sizeof(va_arg(ap, void *));
 				break;
+
 			case 'o':
 				buffer_size += sizeof(va_arg(ap, char));
 				break;
 			}
+
+		/* increment length to add to buffer_size */
+		length++;
 	}
 
 	va_end(ap);
 
-	return (buffer_size);
+	return (buffer_size + length);
 }
 
 /**
@@ -119,7 +129,6 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		exit(1);
-
 
 	whole_buffer = malloc(set_size(format));
 
@@ -150,20 +159,13 @@ int _printf(const char *format, ...)
 
 	while(*whole_buffer)
 	{
-		putchar(*whole_buffer);
+		_putchar(*whole_buffer);
 		whole_buffer++;
+
+		length++;
 	}
 
+	va_end(ap);
 
-}
-
-/* For testing function whiles i code it*/
-int main(void)
-{
-	char *name = "Francis Ofori Anane";
-
-	printf("%d\n", sizeof("Francis Ofori Anane"));
-        _printf("Your Name is %s", name);
-
-	return (0);
+	return (length);
 }
