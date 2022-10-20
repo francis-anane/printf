@@ -20,18 +20,16 @@
  * (NULL) if src or index is NULL
  */
 
-char *copy_string(char *dest, char *src, int *index)
+char *copy_string(char *dest, const char *src, int *index)
 {
 	int i;
 
 	if (src == NULL || index == NULL)
 		return (NULL);
 
-	for (i = 0; i < strlen(src); i++\
-)
+	for (i = 0; i < strlen(src); i++)
         {
-               *(dest + *index) = src[i]\
-;
+               *(dest + *index) = src[i];
                *index += 1;
         }
 
@@ -47,7 +45,7 @@ char *copy_string(char *dest, char *src, int *index)
 
 int set_size(const char *str, ...)
 {
-	/*store the buffer size of the whole arguments*/
+	/*store the buffer size of the whole arguments using index for interation*/
 	int index, buffer_size;
 
 	/*Argument parameters*/
@@ -60,9 +58,6 @@ int set_size(const char *str, ...)
 	va_start(ap, str);
 
 	buffer_size = sizeof(str);
-	if(str[0] == '%')
-		printf("%s", va_arg(ap, char*));
-	return (0);
 
 	for (index = 0; index < strlen(str); index++)
 	{
@@ -94,6 +89,8 @@ int set_size(const char *str, ...)
 				break;
 			}
 	}
+
+	va_end(ap);
 
 	return (buffer_size);
 }
@@ -139,10 +136,17 @@ int _printf(const char *format, ...)
 		else if (format[index2] == '%' && format[index2 + 1] == 's')
 
 			copy_string(whole_buffer, va_arg(ap, char*), &index);
-		else if ((format[index2] == '%') && (format[index2 + 1] == 'd' || format[index2 + 1] == 'i'))
+
+		else if (format[index2] == '%' && format[index2 + 1] == 'd')
+
+			whole_buffer[index] = va_arg(ap, int);
+
+		else if (format[index2] == '%' && format[index2 + 1] == 'i')
 
 			whole_buffer[index] = va_arg(ap, int);
 	}
+
+	/* For testing output whiles I code Function */
 
 	while(*whole_buffer)
 	{
@@ -150,6 +154,16 @@ int _printf(const char *format, ...)
 		whole_buffer++;
 	}
 
-	
 
+}
+
+/* For testing function whiles i code it*/
+int main(void)
+{
+	char *name = "Francis Ofori Anane";
+
+	printf("%d\n", sizeof("Francis Ofori Anane"));
+        _printf("Your Name is %s", name);
+
+	return (0);
 }
