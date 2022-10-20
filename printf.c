@@ -23,7 +23,7 @@
 
 char *copy_string(char *dest, const char *src, int *index)
 {
-	int i;
+	unsigned int i;
 
 	if (src == NULL || index == NULL)
 		return (NULL);
@@ -44,7 +44,7 @@ char *copy_string(char *dest, const char *src, int *index)
 
 int set_size(const char *str, ...)
 {
-	int index, buffer_size = 0, length = 0;
+	unsigned int index, buffer_size = 0, length = 0;
 	va_list ap;
 
 	if (str == NULL)
