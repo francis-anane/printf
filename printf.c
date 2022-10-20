@@ -16,24 +16,27 @@
  * @src: A pointer to the source buffer.
  * @index: The index to start coping from.
  *
- * Return: Nothing, (NULL) if src or index is NULL
+ * Return: A pointer to the dest,
+ * (NULL) if src or index is NULL
  */
 
-void copy_string(char **dest, char *src, int *index)
+char *copy_string(char *dest, char *src, int *index)
 {
-	if (src == NULL || index == NULL)
-		return;
+	int i;
 
-	int i = 0;
-	while (src[i])
-	{
-		**dest[index] = src[i];
-		i++;
-		*index++;
-	}
+	if (src == NULL || index == NULL)
+		return (NULL);
+
+	for (i = 0; i < strlen(src); i++\
+)
+        {
+               *(dest + *index) = src[i]\
+;
+               *index += 1;
+        }
 
 	return (dest);
-	}
+}
 
 /**
  * set_size - Set a byte size from list of arguments.
@@ -125,7 +128,7 @@ int _printf(const char *format, ...)
 
 	va_start(ap, format);
 
-	copy_string(&whole_buffer, format, &index);
+	copy_string(whole_buffer, format, &index);
 
 	for (index2 = 0; index2 < strlen(format); index2++)
 	{
@@ -135,10 +138,18 @@ int _printf(const char *format, ...)
 
 		else if (format[index2] == '%' && format[index2 + 1] == 's')
 
-			copy_string(&whole_buffer, va_arg(ap, char*), &index);
+			copy_string(whole_buffer, va_arg(ap, char*), &index);
 		else if ((format[index2] == '%') && (format[index2 + 1] == 'd' || format[index2 + 1] == 'i'))
 
 			whole_buffer[index] = va_arg(ap, int);
 	}
+
+	while(*whole_buffer)
+	{
+		putchar(*whole_buffer);
+		whole_buffer++;
+	}
+
+	
 
 }
