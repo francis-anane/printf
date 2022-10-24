@@ -36,10 +36,21 @@ int print_string(char *str)
  * Return: (1) for character byte size.
  */
 
-size_t print_char(char c)
+int print_char(char c)
 {
 	write(1, &c, 1);
 	return (sizeof(c));
+}
+/**
+ * print_buffer - Print output by a specified argument list.
+ *
+ * @format: The specified format string
+ * @arg_list: A pointer to the list of arguments
+ * Return: The length of characters printed out.
+ */
+
+int print_buffer(const char *format, va_list *arg_list)
+{
 }
 
 /**
@@ -53,39 +64,42 @@ size_t print_char(char c)
 int _printf(const char *format, ...)
 {
 	va_list ap;
-
 	int len = 0, index;
 
-	if(format == NULL)
-		return(0);
-
+	if (format == NULL)
+		return (0);
 	va_start(ap, format);
-
 	/*print out data by format*/
-	for(index = 0; index < (int) strlen(format); index++)
+	for (index = 0; index < (int) strlen(format); index++)
 	{
-		if(format[index] == '%' && format[index +1] == 'c')
+		if (format[index] == '%' && format[index + 1] == 'c')
 		{
 			len += print_char(va_arg(ap, int));
 			index += 1;
 		}
-
-		else if(format[index] == '%' && format[index +1] == 's')
+		else if (format[index] == '%' && format[index + 1] == 's')
 		{
 			len += print_string(va_arg(ap, char*));
 			index += 1;
 		}
-
-		else if(format[index] == '%' && format[index +1] == '%')
+		else if (format[index] == '%' && format[index + 1] == '%')
 		{
 			len += print_char('%');
+			index += 1;
+		}
+		else if (format[index] == '%' && format[index + 1] == 'd')
+		{
+			len += print_char(va_arg(ap, int));
+			index += 1;
+		}
+		else if (format[index] == '%' && format[index + 1] == 'i')
+		{
+			len += print_char(va_arg(ap, int));
 			index += 1;
 		}
 		else
 			len += print_char(format[index]);
 	}
-
 	va_end(ap);
-
 	return (len);
 }
