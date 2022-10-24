@@ -1,88 +1,45 @@
-/*
- * Authors: Francis Ofori Anane and ..........add your name
- * Date: 18/10/2022
- */
-
-#include <stdlib.h>
 #include <stdarg.h>
-#include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include "main.h"
+#include <unistd.h>
 
 /**
- * copy_string - Copy string from src to dest at a giving index.
+ * print_string - print a string of characters
  *
- * @dest: A pointer to the receiving buffer
- * @src: A pointer to the source buffer.
- * @index: The index to start coping from.
+ * @str: The string to print.
  *
- * Return: A pointer to the dest,
- * (NULL) if src or index is NULL
+ * Return: The length of the string.
  */
 
-char *copy_string(char *dest, const char *src, size_t *index)
+int print_string(char *str)
 {
-	size_t i;
+	int len;
+	char c;
 
-	if (src == NULL || index == NULL)
-		return (NULL);
-	for (i = 0; i < strlen(src); i++)
+	if (str == NULL)
+		return (0);
+
+	for (len = 0; len < strlen(str); len++)
 	{
-		*(dest + *index) = src[i];
-		*index += 1;
+		c = str[len];
+		write(1, &c, 1);
 	}
-	return (dest);
+
+	return (len);
 }
 
 /**
- * set_size - Set a byte size from list of arguments.
- * @str: The length of argument list.
+ * print_char - print a single character.
  *
- * Return: The size of of argument paramters.
-*/
+ * @c: The character to print.
+ *
+ * Return: (1) for character byte size.
+ */
 
-int set_size(const char *str, ...)
+int print_char(char c)
 {
-	size_t index, buffer_size = 0, length = 0;
-	va_list ap;
-
-	if (str == NULL)
-		exit(1);
-	/*Initialize argument list*/
-	va_start(ap, str);
-	/*Increment buffer_size*/
-	for (index = 0; index < strlen(str); index++)
-	{
-		if (str[index] == '%')
-			switch (str[index + 1])
-			{
-			case 'c':
-				buffer_size += sizeof(va_arg(ap, char));
-				break;
-			case 's':
-				buffer_size += sizeof(va_arg(ap, char*));
-				break;
-			case 'd':
-				buffer_size += sizeof(va_arg(ap, int));
-				break;
-			case 'i':
-				buffer_size += sizeof(va_arg(ap, int));
-				break;
-			case 'u':
-				buffer_size += sizeof(va_arg(ap, unsigned int));
-				break;
-			case 'p':
-				buffer_size += sizeof(va_arg(ap, void *));
-				break;
-			case 'o':
-				buffer_size += sizeof(va_arg(ap, char));
-				break;
-			}
-		length++;
-	}
-	va_end(ap);
-	return (buffer_size + length);
+	write(1, &c, 1);
+	return (sizeof(c));
 }
 
 /**
@@ -95,43 +52,40 @@ int set_size(const char *str, ...)
 
 int _printf(const char *format, ...)
 {
-	/*interators*/
-	size_t index = 0, index2 = 0;
-	/*store the length argument of characters*/
-	int length = 0;
-	/* Allocates memory for list of arguments*/
-	char *whole_buffer, *data_to_print __attribute__((unused));
-	/*Argument parameters*/
 	va_list ap;
 
-	if (format == NULL)
-		exit(1);
-	/* Allocate memory with malloc, store data in pointer whole_buffer*/
-	whole_buffer = malloc(set_size(format));
+	int len = 0, index;
+
+	if(format == NULL)
+		return(0);
+
 	va_start(ap, format);
-	copy_string(whole_buffer, format, &index);
 
-	for (index2 = 0; index2 < strlen(format); index2++)
+	/*print out data by format*/
+	for(index = 0; index <strlen(format); index++)
 	{
-		if (format[index2] == '%' && format[index2 + 1] == 'c')
-			whole_buffer[index] = va_arg(ap, int);
+		if(format[index] == '%' && format[index +1] == 'c')
+		{
+			len += print_char(va_arg(ap, int));
+			index += 1;
+		}
 
-		else if (format[index2] == '%' && format[index2 + 1] == 's')
-			copy_string(whole_buffer, va_arg(ap, char*), &index);
+		else if(format[index] == '%' && format[index +1] == 's')
+		{
+			len += print_string(va_arg(ap, char*));
+			index += 1;
+		}
 
-		else if (format[index2] == '%' && format[index2 + 1] == 'd')
-			whole_buffer[index] = va_arg(ap, int);
-
-		else if (format[index2] == '%' && format[index2 + 1] == 'i')
-			whole_buffer[index] = va_arg(ap, int);
+		else if(format[index] == '%' && format[index +1] == '%')
+		{
+			len += print_char('%');
+			index += 1;
+		}
+		else
+			len += print_char(format[index]);
 	}
-	/*test ouput*/
-	while (*whole_buffer)
-	{
-		_putchar(*whole_buffer);
-		whole_buffer++;
-		length++;
-	}
+
 	va_end(ap);
-	return (length);
+
+	return (len);
 }
