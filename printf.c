@@ -36,21 +36,10 @@ int print_string(char *str)
  * Return: (1) for character byte size.
  */
 
-int print_char(char c)
+int print_char(unsigned int c)
 {
 	write(1, &c, 1);
-	return (sizeof(c));
-}
-/**
- * print_buffer - Print output by a specified argument list.
- *
- * @format: The specified format string
- * @arg_list: A pointer to the list of arguments
- * Return: The length of characters printed out.
- */
-
-int print_buffer(const char *format, va_list *arg_list)
-{
+	return (1);
 }
 
 /**
