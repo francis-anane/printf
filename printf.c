@@ -94,7 +94,7 @@ int _printf(const char *format, ...)
 	char *str;
 
 	if (format == NULL)
-		return (0);
+		return (-1);
 	va_start(ap, format);
 
 	/*print out data by format*/
