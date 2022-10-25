@@ -93,7 +93,7 @@ int _printf(const char *format, ...)
 	int len = 0, i;
 	char *str;
 
-	if (format == NULL)
+	if (format == NULL || format == (char *) '%')
 		return (-1);
 	va_start(ap, format);
 
