@@ -19,7 +19,7 @@ int print_string(char *str)
 	if (str == NULL)
 		return (0);
 
-	for (len = 0; len < strlen(str); len++)
+	for (len = 0; len < (int) strlen(str); len++)
 	{
 		c = str[len];
 		write(1, &c, 1);
@@ -98,7 +98,7 @@ int _printf(const char *format, ...)
 	va_start(ap, format);
 
 	/*print out data by format*/
-	for(index = 0; index < strlen(format); index++)
+	for(index = 0; index < (int) strlen(format); index++)
 	{
 		if(format[index] == '%' && format[index +1] == 'c')
 		{
