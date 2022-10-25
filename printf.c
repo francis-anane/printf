@@ -43,7 +43,7 @@ int print_char(char c)
 }
 
 /**
- * print_int - print an integer value
+ * print_int - print an integer value.
  *
  * @n: The value to print.
  *
