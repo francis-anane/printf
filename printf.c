@@ -54,29 +54,28 @@ int print_int(int n)
 {
 	int i = 0, j = 0;
 	int tmp = n;
-        char *int_str;
-        while((tmp % 10) != 0)
-        {
-                tmp /= 10;
-                i++;
-        }
-        int_str = malloc(i * (sizeof(n % 10) + '0'));
+	char *int_str;
 
-        while((n % 10) != 0)
-        {
-                int_str[j] = (n % 10) + '0';
-                n /= 10;
-                j += 1;
+	while ((tmp % 10) != 0)
+	{
+		tmp /= 10;
+		i++;
+	}
+	int_str = malloc(i * (sizeof(n % 10) + '0'));
+	while ((n % 10) != 0)
+	{
+		int_str[j] = (n % 10) + '0';
+		n /= 10;
+		j += 1;
 	}
 
 	/*print by reversing the string*/
-	while(j >= 0)
-        {
-                write(1, &int_str[j], 1);
-                j--;
-        }
-        free(int_str);
-
+	while (j >= 0)
+	{
+		write(1, &int_str[j], 1);
+		j--;
+	}
+	free(int_str);
 	return (1);
 }
 
@@ -91,40 +90,38 @@ int print_int(int n)
 int _printf(const char *format, ...)
 {
 	va_list ap;
-	int len = 0, index;
+	int len = 0, i;
 
-	if(format == NULL)
-		return(0);
+	if (format == NULL)
+		return (0);
 	va_start(ap, format);
 
 	/*print out data by format*/
-	for(index = 0; index < (int) strlen(format); index++)
+	for (i = 0; i < (int) strlen(format); i++)
 	{
-		if(format[index] == '%' && format[index +1] == 'c')
+		if (format[i] == '%' && format[i + 1] == 'c')
 		{
 			len += print_char(va_arg(ap, int));
-			index += 1;
+			i += 1;
 		}
-		else if(format[index] == '%' && format[index +1] == 's')
+		else if (format[i] == '%' && format[i + 1] == 's')
 		{
 			len += print_string(va_arg(ap, char*));
-			index += 1;
+			i += 1;
 		}
-		else if(format[index] == '%' && format[index + 1] == '%')
+		else if (format[i] == '%' && format[i + 1] == '%')
 		{
 			len += print_char('%');
-			index += 1;
+			i += 1;
 		}
-		else if(format[index] == '%' && (format[index + 1] == 'd' || format[index + 1] == 'i'))
+		else if (format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i'))
 		{
-				len += print_int(va_arg(ap, int));
-                        index += 1;
-                }
+			len += print_int(va_arg(ap, int));
+			i += 1;
+		}
 		else
-			len += print_char(format[index]);
+			len += print_char(format[i]);
 	}
-
 	va_end(ap);
-
 	return (len);
 }
