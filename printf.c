@@ -69,6 +69,7 @@ int print_int(int n)
 	}
 
 	/*print by reversing the string*/
+	j = j - 1;
 	while (j >= 0)
 	{
 		write(1, &int_str[j], 1);
