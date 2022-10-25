@@ -51,17 +51,17 @@ int print_char(char c)
 
 int print_int(int n)
 {
-	int i = 0, j = 0;
+	int size = 0, j = 0;
 	int tmp = n;
 	char *int_str;
 
-	while ((tmp % 10) != 0)
+	while (tmp != 0)
 	{
 		tmp /= 10;
-		i++;
+		size++;
 	}
-	int_str = malloc(i * (sizeof(n % 10) + '0'));
-	while ((n % 10) != 0)
+	int_str = malloc(size);
+	while (n != 0)
 	{
 		int_str[j] = (n % 10) + '0';
 		n /= 10;
@@ -75,7 +75,7 @@ int print_int(int n)
 		j--;
 	}
 	free(int_str);
-	return (1);
+	return (size);
 }
 
 /**
