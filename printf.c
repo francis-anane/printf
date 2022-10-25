@@ -24,7 +24,6 @@ int print_string(char *str)
 		c = str[len];
 		write(1, &c, 1);
 	}
-
 	return (len);
 }
 
@@ -93,12 +92,8 @@ int _printf(const char *format, ...)
 	int len = 0, i;
 	char *str;
 
-	if (format == NULL)
+	if (format == NULL || strlen(format) == 1)
 		return (-1);
-
-	if (format[0] == '%' && strlen(format) == 1)
-		return (-1);
-
 	va_start(ap, format);
 
 	/*print out data by format*/
