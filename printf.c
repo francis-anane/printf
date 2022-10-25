@@ -50,11 +50,11 @@ int print_char(char c)
  * Return: (1) for length.
  */
 
-int print_int(unsigned int n)
+int print_int(int n)
 {
 	int i = 0, j = 0;
-	unsigned int tmp = n;
-        unsigned char *int_str;
+	int tmp = n;
+        char *int_str;
         while((tmp % 10) != 0)
         {
                 tmp /= 10;
