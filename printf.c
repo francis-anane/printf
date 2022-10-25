@@ -91,6 +91,7 @@ int _printf(const char *format, ...)
 {
 	va_list ap;
 	int len = 0, i;
+	char *str;
 
 	if (format == NULL)
 		return (0);
@@ -106,7 +107,11 @@ int _printf(const char *format, ...)
 		}
 		else if (format[i] == '%' && format[i + 1] == 's')
 		{
-			len += print_string(va_arg(ap, char*));
+			str = va_arg(ap, char *);
+			if (str == NULL)
+				len += print_string("(null)");
+			else
+				len += print_string(str);
 			i += 1;
 		}
 		else if (format[i] == '%' && format[i + 1] == '%')
