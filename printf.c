@@ -89,7 +89,7 @@ int print_int(int n)
 		write(1, &int_s[j], 1);
 		j--;
 	}
-	free(int_str);
+	free(int_s);
 	return (size);
 }
 
