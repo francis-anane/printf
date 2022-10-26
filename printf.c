@@ -49,7 +49,7 @@ int print_char(char c)
  * Return: (1) for length.
  */
 
-int print_int(long long int n)
+int print_int(int64_t n)
 {
 	int size = 0, tmp, j = 0;
 	char *int_s, inv, zero;
