@@ -49,7 +49,7 @@ int print_char(char c)
  * Return: (1) for length.
  */
 
-int print_int(int n)
+int print_int(long long int n)
 {
 	int size = 0, tmp, j = 0;
 	char *int_s, inv, zero;
@@ -60,7 +60,7 @@ int print_int(int n)
 		inv = '-';
 		size = 1;
 		write(1, &inv, 1);
-		n = (abs(n));
+		n = (llabs(n));
 	}
 	if (n == 0)
 	{
