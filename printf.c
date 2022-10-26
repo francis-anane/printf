@@ -54,7 +54,6 @@ int print_int(int64_t n)
 	int size = 0, tmp, j = 0;
 	char *int_s, inv, zero;
 
-	/*check negatives values*/
 	if (n < 0)
 	{
 		inv = '-';
@@ -76,13 +75,14 @@ int print_int(int64_t n)
 		size++;
 	}
 	int_s = malloc(size);
+	if (int_s == NULL)
+		return (-1);
 	while (n != 0)
 	{
 		int_s[j] = (n % 10) + '0';
 		n /= 10;
 		j += 1;
 	}
-	/*print by reversing*/
 	j = j - 1;
 	while (j >= 0)
 	{
