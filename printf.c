@@ -51,28 +51,42 @@ int print_char(char c)
 
 int print_int(int n)
 {
-	int size = 0, j = 0;
-	int tmp = n;
-	char *int_str;
+	int size = 0, tmp, j = 0;
+	char *int_s, inv, zero;
 
+	/*check negatives values*/
+	if (n < 0)
+	{
+		inv = '-';
+		size = 1;
+		write(1, &inv, 1);
+		n = (abs(n));
+	}
+	if (n == 0)
+	{
+		zero = '0';
+		size = 1;
+		write(1, &zero, 1);
+		return (size);
+	}
+	tmp = n;
 	while (tmp != 0)
 	{
 		tmp /= 10;
 		size++;
 	}
-	int_str = malloc(size);
+	int_s = malloc(size);
 	while (n != 0)
 	{
-		int_str[j] = (n % 10) + '0';
+		int_s[j] = (n % 10) + '0';
 		n /= 10;
 		j += 1;
 	}
-
-	/*print by reversing the string*/
+	/*print by reversing*/
 	j = j - 1;
 	while (j >= 0)
 	{
-		write(1, &int_str[j], 1);
+		write(1, &int_s[j], 1);
 		j--;
 	}
 	free(int_str);
